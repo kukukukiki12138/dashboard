@@ -302,43 +302,6 @@ export default {
         </div>
       </div>
     </header>
-    <Banner
-      v-if="!hideClusterToolsTip"
-      :closable="true"
-      class="cluster-tools-tip"
-      color="info"
-      label-key="cluster.toolsTip"
-      @close="hideClusterToolsTip = true"
-    />
-    <div
-      class="cluster-dashboard-glance"
-    >
-      <div>
-        <label>{{ t('glance.provider') }}: </label>
-        <span>
-          {{ displayProvider }}</span>
-      </div>
-      <div>
-        <label>{{ t('glance.version') }}: </label>
-        <span v-if="currentCluster.kubernetesVersionExtension" style="font-size: 0.5em">{{ currentCluster.kubernetesVersionExtension }}</span>
-        <span>{{ currentCluster.kubernetesVersionBase }}</span>
-      </div>
-      <div>
-        <label>{{ t('glance.created') }}: </label>
-        <span><LiveDate :value="currentCluster.metadata.creationTimestamp" :add-suffix="true" :show-tooltip="true" /></span>
-      </div>
-      <div :style="{'flex':1}" />
-      <div v-if="!monitoringStatus.v2 && !monitoringStatus.v1">
-        <n-link :to="{name: 'c-cluster-explorer-tools'}" class="monitoring-install">
-          <i class="icon icon-gear" />
-          <span>{{ t('glance.installMonitoring') }}</span>
-        </n-link>
-      </div>
-      <div v-if="monitoringStatus.v1">
-        <span>{{ t('glance.v1MonitoringInstalled') }}</span>
-      </div>
-    </div>
-
     <div class="resource-gauges">
       <ResourceSummary :spoofed-counts="totalCountGaugeInput" />
       <ResourceSummary v-if="canAccessNodes" resource="node" />

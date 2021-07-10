@@ -497,7 +497,7 @@ export default {
             </Group>
           </template>
         </div>
-        <n-link v-if="isExplorer" tag="div" class="tools" :to="{name: 'c-cluster-explorer-tools', params: {cluster: clusterId}}">
+        <!-- <n-link v-if="isExplorer" tag="div" class="tools" :to="{name: 'c-cluster-explorer-tools', params: {cluster: clusterId}}">
           <a class="tools-button" @click="collapseAll()">
             <i class="icon icon-gear" />
             <span>{{ t('nav.clusterTools') }}</span>
@@ -505,7 +505,7 @@ export default {
         </n-link>
         <div class="version text-muted">
           {{ displayVersion }}
-        </div>
+        </div> -->
       </nav>
       <main v-if="clusterReady">
         <nuxt class="outlet" />

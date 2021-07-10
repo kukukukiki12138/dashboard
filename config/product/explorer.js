@@ -52,44 +52,10 @@ export function init(store) {
 
   basicType(['cluster-dashboard', 'cluster-tools']);
   basicType([
-    'cluster-dashboard',
-    'projects-namespaces',
-    'namespaces',
-    NODE,
-  ], 'cluster');
-  basicType([
-    SERVICE,
-    INGRESS,
-    HPA,
-    NETWORK_POLICY,
-  ], 'serviceDiscovery');
-  basicType([
-    PV,
-    PVC,
-    STORAGE_CLASS,
-    SECRET,
-    CONFIG_MAP
-  ], 'storage');
-  basicType([
     WORKLOAD,
     WORKLOAD_TYPES.DEPLOYMENT,
-    WORKLOAD_TYPES.DAEMON_SET,
-    WORKLOAD_TYPES.STATEFUL_SET,
-    WORKLOAD_TYPES.JOB,
-    WORKLOAD_TYPES.CRON_JOB,
-    POD,
   ], 'workload');
-  basicType([
-    'cluster-members',
-  ], 'rbac');
-
-  weightGroup('cluster', 99, true);
   weightGroup('workload', 98, true);
-  weightGroup('serviceDiscovery', 96, true);
-  weightGroup('storage', 95, true);
-  weightGroup('rbac', 94, true);
-  weightType(POD, -1, true);
-
   for (const key in WORKLOAD_TYPES) {
     componentForType(WORKLOAD_TYPES[key], WORKLOAD);
   }
@@ -136,7 +102,7 @@ export function init(store) {
   configureType(MANAGEMENT.CLUSTER_ROLE_TEMPLATE_BINDING, { isEditable: false });
   configureType(MANAGEMENT.PROJECT_ROLE_TEMPLATE_BINDING, { isEditable: false });
 
-  setGroupDefaultType('serviceDiscovery', SERVICE);
+ // setGroupDefaultType('serviceDiscovery', SERVICE);
 
   configureType('workload', {
     displayName: 'Workload',
@@ -147,66 +113,66 @@ export function init(store) {
     resource: WORKLOAD_TYPES.DEPLOYMENT
   });
 
-  headers(PV, [STATE, NAME_COL, PERSISTENT_VOLUME_CLAIM, PERSISTENT_VOLUME_SOURCE, AGE]);
-  headers(CONFIG_MAP, [NAME_COL, NAMESPACE_COL, KEYS, AGE]);
-  headers(SECRET, [
-    STATE,
-    NAME_COL,
-    NAMESPACE_COL,
-    SUB_TYPE,
-    {
-      name:      'data',
-      label:     'Data',
-      value:     'dataPreview',
-      formatter: 'SecretData'
-    },
-    AGE
-  ]);
-  headers(INGRESS, [STATE, NAME_COL, NAMESPACE_COL, INGRESS_TARGET, INGRESS_DEFAULT_BACKEND, AGE]);
-  headers(SERVICE, [STATE, NAME_COL, NAMESPACE_COL, TARGET_PORT, SELECTOR, SPEC_TYPE, AGE]);
-  headers(HPA, [STATE, NAME_COL, HPA_REFERENCE, MIN_REPLICA, MAX_REPLICA, CURRENT_REPLICA, AGE]);
+//  headers(PV, [STATE, NAME_COL, PERSISTENT_VOLUME_CLAIM, PERSISTENT_VOLUME_SOURCE, AGE]);
+  //headers(CONFIG_MAP, [NAME_COL, NAMESPACE_COL, KEYS, AGE]);
+  // headers(SECRET, [
+  //   STATE,
+  //   NAME_COL,
+  //   NAMESPACE_COL,
+  //   SUB_TYPE,
+  //   {
+  //     name:      'data',
+  //     label:     'Data',
+  //     value:     'dataPreview',
+  //     formatter: 'SecretData'
+  //   },
+  //   AGE
+  // ]);
+  // headers(INGRESS, [STATE, NAME_COL, NAMESPACE_COL, INGRESS_TARGET, INGRESS_DEFAULT_BACKEND, AGE]);
+  // headers(SERVICE, [STATE, NAME_COL, NAMESPACE_COL, TARGET_PORT, SELECTOR, SPEC_TYPE, AGE]);
+  // headers(HPA, [STATE, NAME_COL, HPA_REFERENCE, MIN_REPLICA, MAX_REPLICA, CURRENT_REPLICA, AGE]);
 
   headers(WORKLOAD, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, TYPE, 'Ready', AGE]);
   headers(WORKLOAD_TYPES.DEPLOYMENT, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Up-to-date', 'Available', AGE]);
-  headers(WORKLOAD_TYPES.DAEMON_SET, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Current', 'Desired', AGE]);
-  headers(WORKLOAD_TYPES.REPLICA_SET, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Current', 'Desired', AGE]);
-  headers(WORKLOAD_TYPES.STATEFUL_SET, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', AGE]);
-  headers(WORKLOAD_TYPES.JOB, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Completions', 'Duration', AGE]);
-  headers(WORKLOAD_TYPES.CRON_JOB, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Schedule', 'Last Schedule', AGE]);
-  headers(WORKLOAD_TYPES.REPLICATION_CONTROLLER, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Current', 'Desired', AGE]);
-  headers(POD, [STATE, NAME_COL, NAMESPACE_COL, POD_IMAGES, 'Ready', 'Restarts', 'IP', NODE_COL, AGE]);
-  headers(STORAGE_CLASS, [STATE, NAME_COL, STORAGE_CLASS_PROVISIONER, STORAGE_CLASS_DEFAULT, AGE]);
+  // headers(WORKLOAD_TYPES.DAEMON_SET, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Current', 'Desired', AGE]);
+  // headers(WORKLOAD_TYPES.REPLICA_SET, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Current', 'Desired', AGE]);
+  // headers(WORKLOAD_TYPES.STATEFUL_SET, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', AGE]);
+  // headers(WORKLOAD_TYPES.JOB, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Completions', 'Duration', AGE]);
+  // headers(WORKLOAD_TYPES.CRON_JOB, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Schedule', 'Last Schedule', AGE]);
+  // headers(WORKLOAD_TYPES.REPLICATION_CONTROLLER, [STATE, NAME_COL, NAMESPACE_COL, WORKLOAD_IMAGES, WORKLOAD_ENDPOINTS, 'Ready', 'Current', 'Desired', AGE]);
+  // headers(POD, [STATE, NAME_COL, NAMESPACE_COL, POD_IMAGES, 'Ready', 'Restarts', 'IP', NODE_COL, AGE]);
+  // headers(STORAGE_CLASS, [STATE, NAME_COL, STORAGE_CLASS_PROVISIONER, STORAGE_CLASS_DEFAULT, AGE]);
 
-  headers(RBAC.ROLE, [
-    STATE,
-    NAME_COL,
-    NAMESPACE_COL,
-    AGE
-  ]);
+  // headers(RBAC.ROLE, [
+  //   STATE,
+  //   NAME_COL,
+  //   NAMESPACE_COL,
+  //   AGE
+  // ]);
 
-  headers(RBAC.CLUSTER_ROLE, [
-    STATE,
-    NAME_COL,
-    AGE
-  ]);
+  // headers(RBAC.CLUSTER_ROLE, [
+  //   STATE,
+  //   NAME_COL,
+  //   AGE
+  // ]);
 
-  headers(MANAGEMENT.USER, [
-    STATE,
-    USER_ID,
-    USER_DISPLAY_NAME,
-    USER_PROVIDER,
-    USERNAME,
-    AGE
-  ]);
+  // headers(MANAGEMENT.USER, [
+  //   STATE,
+  //   USER_ID,
+  //   USER_DISPLAY_NAME,
+  //   USER_PROVIDER,
+  //   USERNAME,
+  //   AGE
+  // ]);
 
-  headers(NORMAN.TOKEN, [
-    EXPIRY_STATE,
-    ACCESS_KEY,
-    DESCRIPTION,
-    SCOPE_NORMAN,
-    EXPIRES,
-    AGE_NORMAN
-  ]);
+  // headers(NORMAN.TOKEN, [
+  //   EXPIRY_STATE,
+  //   ACCESS_KEY,
+  //   DESCRIPTION,
+  //   SCOPE_NORMAN,
+  //   EXPIRES,
+  //   AGE_NORMAN
+  // ]);
 
   virtualType({
     label:       store.getters['i18n/t']('clusterIndexPage.header'),
@@ -219,20 +185,20 @@ export function init(store) {
     overview:    true,
   });
 
-  virtualType({
-    label:       store.getters['i18n/t']('members.clusterMembers'),
-    group:      'rbac',
-    namespaced:  false,
-    name:        VIRTUAL_TYPES.CLUSTER_MEMBERS,
-    icon:       'globe',
-    weight:      100,
-    route:       { name: 'c-cluster-explorer-members' },
-    exact:       true,
-    ifHaveType:  {
-      type:   MANAGEMENT.CLUSTER_ROLE_TEMPLATE_BINDING,
-      store: 'management'
-    }
-  });
+  // virtualType({
+  //   label:       store.getters['i18n/t']('members.clusterMembers'),
+  //   group:      'rbac',
+  //   namespaced:  false,
+  //   name:        VIRTUAL_TYPES.CLUSTER_MEMBERS,
+  //   icon:       'globe',
+  //   weight:      100,
+  //   route:       { name: 'c-cluster-explorer-members' },
+  //   exact:       true,
+  //   ifHaveType:  {
+  //     type:   MANAGEMENT.CLUSTER_ROLE_TEMPLATE_BINDING,
+  //     store: 'management'
+  //   }
+  // });
 
   virtualType({
     label:          store.getters['i18n/t'](`typeLabel.${ WORKLOAD }`, { count: 2 }),

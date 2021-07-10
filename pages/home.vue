@@ -237,89 +237,9 @@ export default {
 </script>
 <template>
   <div class="home-page">
-    <BannerGraphic :small="true" :title="t('landing.welcomeToRancher', {vendor})" :pref="HIDE_HOME_PAGE_CARDS" pref-key="welcomeBanner" />
     <IndentedPanel class="mt-20 mb-20">
-      <div v-if="!readWhatsNewAlready" class="row">
-        <div class="col span-12">
-          <Banner color="info whats-new">
-            <div>{{ t('landing.seeWhatsNew') }}</div>
-            <a class="hand" @click.prevent.stop="showWhatsNew"><span v-html="t('landing.whatsNewLink')" /></a>
-          </Banner>
-        </div>
-      </div>
-
-      <div
-        v-if="!mcm && clusterDetail"
-        class="cluster-dashboard-glance"
-      >
-        <div>
-          <label>{{ t('glance.provider') }}: </label>
-          <span>
-            {{ t(`cluster.provider.${ clusterDetail.status.provider || 'other' }`) }}</span>
-        </div>
-        <div>
-          <label>{{ t('glance.version') }}: </label>
-          <span v-if="clusterDetail.kubernetesVersionExtension" style="font-size: 0.5em">{{ clusterDetail.kubernetesVersionExtension }}</span>
-          <span>{{ clusterDetail.kubernetesVersionBase }}</span>
-        </div>
-        <div>
-          <label>{{ t('glance.created') }}: </label>
-          <span><LiveDate :value="clusterDetail.metadata.creationTimestamp" :add-suffix="true" :show-tooltip="true" /></span>
-        </div>
-
-        <div class="glance-gauge">
-          <span>{{ t('landing.clusters.cpuUsed') }}:</span>
-
-          <ConsumptionGauge
-
-            :capacity="get(clusterDetail, 'metrics.cpu.total')"
-            :used="get(clusterDetail, 'metrics.cpu.used')"
-          >
-            <template #title>
-              <span class="text-muted">
-                {{ get(clusterDetail, 'metrics.cpu.used') || 0 }} / {{ get(clusterDetail, 'metrics.cpu.total') }}
-              </span>
-            </template>
-          </ConsumptionGauge>
-        </div>
-        <div class="glance-gauge">
-          <span>{{ t('landing.clusters.memoryUsed') }}:</span>
-          <ConsumptionGauge
-            :units="get(clusterDetail, 'metrics.memory.units')"
-            :capacity="get(clusterDetail, 'metrics.memory.total')"
-            :used="get(clusterDetail, 'metrics.memory.used')"
-          >
-            <template #title>
-              <span class="text-muted">
-                {{ get(clusterDetail, 'metrics.memory.used') || 0 }} / {{ get(clusterDetail, 'metrics.memory.total') }}{{ get(clusterDetail, 'metrics.memory.units') }}
-              </span>
-            </template>
-          </ConsumptionGauge>
-        </div>
-        <div :style="{'flex':1}" />
-      </div>
-
       <div class="row">
         <div :class="{'span-9': showSidePanel, 'span-12': !showSidePanel }" class="col">
-          <SimpleBox
-            id="migration"
-            class="panel"
-            :title="t('landing.gettingStarted.title')"
-            :pref="HIDE_HOME_PAGE_CARDS"
-            pref-key="migrationTip"
-          >
-            <div class="getting-started">
-              <span>
-                {{ t('landing.gettingStarted.body') }}
-              </span>
-              <nuxt-link :to="{name: 'docs-doc', params: {doc: 'getting-started'}}" class="getting-started-btn">
-                {{ t('landing.learnMore') }}
-              </nuxt-link>
-            </div>
-          </SimpleBox>
-          <SimpleBox :title="t('landing.landingPrefs.title')" :pref="HIDE_HOME_PAGE_CARDS" pref-key="setLoginPage" class="panel">
-            <LandingPagePreference />
-          </SimpleBox>
           <div class="row panel">
             <div v-if="mcm" class="col span-12">
               <SortableTable :table-actions="false" :row-actions="false" key-field="id" :rows="clusters" :headers="clusterHeaders">
@@ -332,18 +252,6 @@ export default {
                   </div>
                 </template>
                 <template #header-middle>
-                  <n-link
-                    :to="importLocation"
-                    class="btn btn-sm role-primary"
-                  >
-                    {{ t('cluster.importAction') }}
-                  </n-link>
-                  <n-link
-                    :to="createLocation"
-                    class="btn btn-sm role-primary"
-                  >
-                    {{ t('generic.create') }}
-                  </n-link>
                 </template>
                 <template #col:name="{row}">
                   <td>
@@ -390,14 +298,6 @@ export default {
               </SortableTable>
             </div>
           </div>
-        </div>
-        <div v-if="showSidePanel" class="col span-3">
-          <CommunityLinks :pref="HIDE_HOME_PAGE_CARDS" pref-key="communitySupportTip" class="mb-20" />
-          <SimpleBox v-if="showCommercialSupport" :pref="HIDE_HOME_PAGE_CARDS" pref-key="commercialSupportTip" :title="t('landing.commercial.title')">
-            <nuxt-link :to="{ path: 'support'}">
-              {{ t('landing.commercial.body') }}
-            </nuxt-link>
-          </SimpleBox>
         </div>
       </div>
     </IndentedPanel>

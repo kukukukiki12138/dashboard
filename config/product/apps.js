@@ -43,10 +43,10 @@ export function init(store) {
 
   basicType([
     'charts',
-    CATALOG.APP,
-    CATALOG.OPERATION,
-    CATALOG.CLUSTER_REPO,
-    CATALOG.REPO,
+    // CATALOG.APP,
+    // CATALOG.OPERATION,
+    // CATALOG.CLUSTER_REPO,
+    // CATALOG.REPO,
   ]);
 
   configureType(CATALOG.APP, { isCreatable: false, isEditable: false });

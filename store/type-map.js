@@ -540,8 +540,8 @@ export const getters = {
           group = _ensureGroup(root, groupForBasicType, true);
         } else if ( mode === FAVORITE ) {
           group = _ensureGroup(root, 'starred');
-        } else if ( mode === USED ) {
-          group = _ensureGroup(root, `inUse::${ getters.groupLabelFor(typeObj.schema) }`);
+        } else if ( mode === USED) {
+          continue;
         } else {
           group = _ensureGroup(root, typeObj.schema || typeObj.group || ROOT);
         }
