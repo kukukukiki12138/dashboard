@@ -1824,7 +1824,7 @@ longhorn:
 
 login:
   howdy: Howdy!
-  welcome: Welcome to {vendor}
+  welcome:  Welcome to {vendor}
   loggedOut: You have been logged out.
   loginAgain: Log in again to continue.
   error: An error occured logging in. Please try again.

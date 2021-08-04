@@ -4,7 +4,7 @@ export const ANY = 0;
 export const STANDARD = 1;
 export const CUSTOM = 2;
 
-const STANDARD_VENDOR = 'SEU';
+const STANDARD_VENDOR = '资源统一管理平台';
 const STANDARD_PRODUCT = 'Explorer';
 
 let mode = STANDARD;
